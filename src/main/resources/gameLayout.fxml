@@ -15,6 +15,26 @@
         </center>
     </BorderPane>
 
+    <VBox fx:id="nextBox" spacing="10" alignment="TOP_CENTER"
+          layoutY="40"
+          style="-fx-padding: 10;">
+        <Label text="NEXT"
+               style="-fx-text-fill: cyan;
+                      -fx-font-size: 18;
+                      -fx-font-weight: bold;"/>
+
+        <StackPane fx:id="nextBrickFrame"
+                   style="-fx-background-color: rgba(255,255,255,0.1);
+                          -fx-border-color: white;
+                          -fx-border-width: 2;
+                          -fx-border-radius: 8;
+                          -fx-background-radius: 8;
+                          -fx-padding: 10;
+                          -fx-min-width: 120;
+                          -fx-min-height: 120;">
+            <GridPane fx:id="nextBrickPanel" hgap="1" vgap="1"/>
+        </StackPane>
+    </VBox>
     <Group fx:id="groupNotification" layoutX="14" layoutY="203">
         <VBox alignment="CENTER">
             <GameOverPanel fx:id="gameOverPanel"/>

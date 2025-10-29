@@ -18,11 +18,16 @@ import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import javafx.scene.layout.BorderPane;
+
+
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +48,36 @@ public class GuiController implements Initializable {
     @FXML
     private GameOverPanel gameOverPanel;
 
+    @FXML
+    private VBox nextBox;
+
+    @FXML
+    private BorderPane gameBoard;
+
+
+    @FXML
+    private GridPane nextBrickPanel; // For displaying the next brick
+
+    public void showNextBrick(ViewData viewData) {
+        if (nextBrickPanel == null || viewData == null) return;
+        nextBrickPanel.getChildren().clear();
+
+        int[][] data = viewData.getNextBrickData();
+        if (data == null) return;
+
+        for (int i = 0; i < data.length; i++) {
+            for (int j = 0; j < data[i].length; j++) {
+                Rectangle rect = new Rectangle(BRICK_SIZE, BRICK_SIZE);
+                rect.setFill(getFillColor(data[i][j]));
+                rect.setArcHeight(9);
+                rect.setArcWidth(9);
+                nextBrickPanel.add(rect, j, i);
+            }
+        }
+    }
+
+
+
     private Rectangle[][] displayMatrix;
 
     private InputEventListener eventListener;
@@ -60,6 +95,15 @@ public class GuiController implements Initializable {
         Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
+
+        // Align "NEXT" panel dynamically beside the game board
+        nextBox.layoutXProperty().bind(
+                gameBoard.layoutXProperty().add(gameBoard.widthProperty()).add(30)
+        );
+        nextBox.layoutYProperty().bind(
+                gameBoard.layoutYProperty().add(40)
+        );
+
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
@@ -85,6 +129,7 @@ public class GuiController implements Initializable {
                     newGame(null);
                 }
             }
+
         });
         gameOverPanel.setVisible(false);
 
@@ -226,4 +271,8 @@ public class GuiController implements Initializable {
     public void pauseGame(ActionEvent actionEvent) {
         gamePanel.requestFocus();
     }
+
+
+
+
 }
