@@ -1,4 +1,10 @@
-package com.comp2042;
+package com.comp2042.controller;
+
+import com.comp2042.model.Board;
+import com.comp2042.model.ClearRow;
+import com.comp2042.model.DownData;
+import com.comp2042.model.SimpleBoard;
+import com.comp2042.view.ViewData;
 
 public class GameController implements InputEventListener {
 

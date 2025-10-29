@@ -1,8 +1,10 @@
-package com.comp2042;
+package com.comp2042.model;
 
 import com.comp2042.logic.bricks.Brick;
 import com.comp2042.logic.bricks.BrickGenerator;
 import com.comp2042.logic.bricks.RandomBrickGenerator;
+import com.comp2042.view.NextShapeInfo;
+import com.comp2042.view.ViewData;
 
 import java.awt.*;
 
