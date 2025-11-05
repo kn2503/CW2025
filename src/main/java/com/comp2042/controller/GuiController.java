@@ -6,6 +6,7 @@ import com.comp2042.view.NotificationPanel;
 import com.comp2042.view.ViewData;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -14,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -64,6 +66,9 @@ public class GuiController implements Initializable {
 
     @FXML
     private GridPane nextBrickPanel; // For displaying the next brick
+
+    @FXML
+    private Label scoreLabel; //For displaying the score
 
     public void showNextBrick(ViewData viewData) {
         if (nextBrickPanel == null || viewData == null) return;
@@ -257,6 +262,7 @@ public class GuiController implements Initializable {
     }
 
     public void bindScore(IntegerProperty integerProperty) {
+        scoreLabel.textProperty().bind(Bindings.concat("Score: ").concat(integerProperty.asString()));
     }
 
     public void gameOver() {
