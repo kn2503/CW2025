@@ -14,6 +14,9 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
+    private static final int Window_Width = 410;
+    private static final int Window_Height = 510;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -23,12 +26,12 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
         GuiController c = fxmlLoader.getController();
 
-        primaryStage.setTitle("Tetris");
-        Scene scene = new Scene(root, 410, 510);
+        primaryStage.setTitle("Tetris"); //Set application title
+        Scene scene = new Scene(root, Window_Width, Window_Height); //Remove magic numbers
         primaryStage.setScene(scene);
         primaryStage.show();
-        primaryStage.setResizable(false);
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/tetris.png")));
+        primaryStage.setResizable(false); //Prevent resizing to avoid layout issues
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/tetris.png"))); //Set application icon
         new GameController(c);
     }
 

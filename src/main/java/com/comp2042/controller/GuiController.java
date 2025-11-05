@@ -34,7 +34,14 @@ import java.util.ResourceBundle;
 
 public class GuiController implements Initializable {
 
+    // Replace magic numbers with constants
     private static final int BRICK_SIZE = 20;
+    private static final int BrickCornerRadius = 9;
+    private static final int BrickVerticalOffset = -42;
+    private static final int DropInterval = 400;
+    private static final int NextBoxOffsetX = 30;
+    private static final int NextBoxOffsetY = 40;
+
 
     @FXML
     private GridPane gamePanel;
@@ -69,8 +76,8 @@ public class GuiController implements Initializable {
             for (int j = 0; j < data[i].length; j++) {
                 Rectangle rect = new Rectangle(BRICK_SIZE, BRICK_SIZE);
                 rect.setFill(getFillColor(data[i][j]));
-                rect.setArcHeight(9);
-                rect.setArcWidth(9);
+                rect.setArcHeight(BrickCornerRadius);
+                rect.setArcWidth(BrickCornerRadius);
                 nextBrickPanel.add(rect, j, i);
             }
         }
@@ -98,10 +105,10 @@ public class GuiController implements Initializable {
 
         // Align "NEXT" panel dynamically beside the game board
         nextBox.layoutXProperty().bind(
-                gameBoard.layoutXProperty().add(gameBoard.widthProperty()).add(30)
+                gameBoard.layoutXProperty().add(gameBoard.widthProperty()).add(NextBoxOffsetX)
         );
         nextBox.layoutYProperty().bind(
-                gameBoard.layoutYProperty().add(40)
+                gameBoard.layoutYProperty().add(NextBoxOffsetY)
         );
 
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -160,11 +167,11 @@ public class GuiController implements Initializable {
             }
         }
         brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
-        brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
+        brickPanel.setLayoutY(BrickVerticalOffset + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
 
 
         timeLine = new Timeline(new KeyFrame(
-                Duration.millis(400),
+                Duration.millis(DropInterval),
                 ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
         ));
         timeLine.setCycleCount(Timeline.INDEFINITE);
@@ -209,7 +216,7 @@ public class GuiController implements Initializable {
     private void refreshBrick(ViewData brick) {
         if (isPause.getValue() == Boolean.FALSE) {
             brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
-            brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
+            brickPanel.setLayoutY(BrickVerticalOffset + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
             for (int i = 0; i < brick.getBrickData().length; i++) {
                 for (int j = 0; j < brick.getBrickData()[i].length; j++) {
                     setRectangleData(brick.getBrickData()[i][j], rectangles[i][j]);
@@ -228,8 +235,8 @@ public class GuiController implements Initializable {
 
     private void setRectangleData(int color, Rectangle rectangle) {
         rectangle.setFill(getFillColor(color));
-        rectangle.setArcHeight(9);
-        rectangle.setArcWidth(9);
+        rectangle.setArcHeight(BrickCornerRadius);
+        rectangle.setArcWidth(BrickCornerRadius);
     }
 
     private void moveDown(MoveEvent event) {

@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class MatrixOperations {
 
+    private static final int ScoreBase = 50; //to prevent magic number
+
 
     //We don't want to instantiate this utility class
     private MatrixOperations(){
@@ -93,7 +95,7 @@ public class MatrixOperations {
                 break;
             }
         }
-        int scoreBonus = 50 * clearedRows.size() * clearedRows.size();
+        int scoreBonus = ScoreBase * clearedRows.size() * clearedRows.size();
         return new ClearRow(clearedRows.size(), tmp, scoreBonus);
     }
 

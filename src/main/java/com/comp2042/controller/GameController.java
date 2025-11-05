@@ -8,7 +8,12 @@ import com.comp2042.view.ViewData;
 
 public class GameController implements InputEventListener {
 
-    private Board board = new SimpleBoard(25, 10);
+    //Prevent magic numbers
+    private static final int BoardHeight = 25;
+    private static final int BoardWidth = 10;
+
+    private Board board = new SimpleBoard(BoardWidth
+            , BoardHeight);
 
     private final GuiController viewGuiController;
 
