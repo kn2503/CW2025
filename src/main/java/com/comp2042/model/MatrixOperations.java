@@ -15,11 +15,11 @@ public class MatrixOperations {
     }
 
     public static boolean intersect(final int[][] matrix, final int[][] brick, int x, int y) {
-        for (int i = 0; i < brick.length; i++) {
-            for (int j = 0; j < brick[i].length; j++) {
-                int targetX = x + i;
-                int targetY = y + j;
-                if (brick[j][i] != 0 && (checkOutOfBound(matrix, targetX, targetY) || matrix[targetY][targetX] != 0)) {
+        for (int i = 0; i < brick.length; i++) { //i=row
+            for (int j = 0; j < brick[i].length; j++) { //j=column
+                int targetX = x + j; // Switched j and i to match x and y correctly
+                int targetY = y + i;
+                if (brick[i][j] != 0 && (checkOutOfBound(matrix, targetX, targetY) || matrix[targetY][targetX] != 0)) {
                     return true;
                 }
             }
@@ -50,10 +50,15 @@ public class MatrixOperations {
         int[][] copy = copy(filledFields);
         for (int i = 0; i < brick.length; i++) {
             for (int j = 0; j < brick[i].length; j++) {
-                int targetX = x + i;
-                int targetY = y + j;
-                if (brick[j][i] != 0) {
-                    copy[targetY][targetX] = brick[j][i];
+                int targetX = x + j; // Switched j and i to match x and y correctly
+                int targetY = y + i;
+
+                //prevent writing out of bounds
+                if(targetY<0 || targetY >=copy.length || targetX < 0 || targetX >= copy[0].length)
+                    continue;
+
+                if (brick[i][j] != 0) {
+                    copy[targetY][targetX] = brick[i][j];
                 }
             }
         }
